@@ -1,0 +1,101 @@
+<html>
+<head>
+	<title> urlmatch tests </title>
+  <script type="text/javascript" src="doctestjs/doctest.js"></script>
+  <link rel="stylesheet" type="text/css" href="doctestjs/doctest.css" />
+  <script type="text/javascript" src="urlmatch.js"></script>
+</head>
+<body>
+<h2> urlmatch.js tests </h2>
+
+<p>
+</p>
+
+<div>
+  <button onclick="doctest()" type="button">run tests</button>
+  <pre id="doctestOutput"></pre>
+</div>
+
+To start with a test of basic url paring:
+
+<pre class="doctest">
+$ var parse = function(s) { writeln(JSON.stringify(URL.parse(s),null,4)) };
+$ parse("http://apps.mozillalabs.com");
+{
+    "host": "apps.mozillalabs.com",
+    "authority": "apps.mozillalabs.com",
+    "scheme": "http",
+    "source": "http://apps.mozillalabs.com"
+}
+$ parse("http://apps.mozillalabs.com/");
+{
+    "directory": "/",
+    "path": "/",
+    "relative": "/",
+    "host": "apps.mozillalabs.com",
+    "authority": "apps.mozillalabs.com",
+    "scheme": "http",
+    "source": "http://apps.mozillalabs.com/"
+}
+$ parse("file:///Users/lth/dev/urlmatch/somefile.html");
+{
+    "file": "somefile.html",
+    "directory": "/Users/lth/dev/urlmatch/",
+    "path": "/Users/lth/dev/urlmatch/somefile.html",
+    "relative": "/Users/lth/dev/urlmatch/somefile.html",
+    "scheme": "file",
+    "source": "file:///Users/lth/dev/urlmatch/somefile.html"
+}
+$ parse("https://secu.re:443");
+{
+    "port": "443",
+    "host": "secu.re",
+    "authority": "secu.re:443",
+    "scheme": "https",
+    "source": "https://secu.re:443"
+}
+$ parse("https://secu.re:443/foo/../bar/x.html");
+{
+    "file": "x.html",
+    "directory": "/foo/../bar/",
+    "path": "/foo/../bar/x.html",
+    "relative": "/foo/../bar/x.html",
+    "port": "443",
+    "host": "secu.re",
+    "authority": "secu.re:443",
+    "scheme": "https",
+    "source": "https://secu.re:443/foo/../bar/x.html"
+}
+$ parse("http://f.oo/dir");
+{
+    "file": "dir",
+    "directory": "/",
+    "path": "/dir",
+    "relative": "/dir",
+    "host": "f.oo",
+    "authority": "f.oo",
+    "scheme": "http",
+    "source": "http://f.oo/dir"
+}
+$ parse("http://f.oo/dir/");
+{
+    "directory": "/dir/",
+    "path": "/dir/",
+    "relative": "/dir/",
+    "host": "f.oo",
+    "authority": "f.oo",
+    "scheme": "http",
+    "source": "http://f.oo/dir/"
+}
+</pre>
+
+Now test "url validation".
+
+<pre class="doctest">
+$ var validate = function(s) { return URL.parse(s).validate(); };
+$ validate("http://apps.mozillalabs.com");
+$ validate("bogus://apps.mozillalabs.com");
+Error: invalid url: unsupported scheme: bogus
+</pre>
+</body>
+</html>
