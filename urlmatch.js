@@ -73,11 +73,60 @@ URL = (function() {
             }
             if (this.path && this.path.indexOf('/') != 0) throw INV_URL + "path must start with '/'";
 
-            return;
+            return this;
         };
 
         var normalize = function() {
-            return;
+            // lowercase scheme
+            if (this.scheme) this.scheme = this.scheme.toLowerCase();
+
+            // for directory references, append trailing slash
+            if (!this.path) this.path = "/";
+
+            // include port numbers for defaults
+            if (!this.port) {
+                if ('http' === this.scheme) this.port = '80';
+                else if ('https' === this.scheme) this.port = '443';
+            }
+
+            // remove dot segments from path, algorithm
+            // http://tools.ietf.org/html/rfc3986#section-5.2.4
+            this.path = (function (p) {
+                var out = [];
+                while (p) {
+                    if (p.indexOf('../') === 0) p = p.substr(3);
+                    else if (p.indexOf('./') === 0) p = p.substr(2);
+                    else if (p.indexOf('/./') === 0) p = p.substr(2);
+                    else if (p === '/.') p = '/';
+                    else if (p.indexOf('/../') === 0 || p === '/..') {
+                        if (out.length > 0) out.pop();
+                        p = '/' + p.substr(4);
+                    } else if (p === '.' || p === '..') p = '';
+                    else {
+                        var m = p.match(/^\/?([^\/]*)/);
+                        // remove path match from input
+                        p = p.substr(m[0].length);
+                        // add path to output
+                        out.push(m[1]);
+                    }
+                }
+                return '/' + out.join('/');
+            })(this.path);
+
+            // XXX: upcase chars in % escaping?
+
+            // now we need to update all members
+            var n = URL.parse(this.toString()),
+    				    i = 14,
+                o = parseUri.options;
+            
+		        while (i--) {
+                var k = o.key[i];
+                if (n[k] && typeof(n[k]) === 'string') this[k] = n[k];
+                else if (this[k] && typeof(this[k]) === 'string') delete this[k];
+            }
+
+            return this;
         };
 
 		    // parseUri 1.2.2

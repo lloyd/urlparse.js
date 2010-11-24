@@ -1,0 +1,45 @@
+<html>
+<head>
+	<title> urlmatch tests </title>
+  <script type="text/javascript" src="doctestjs/doctest.js"></script>
+  <link rel="stylesheet" type="text/css" href="doctestjs/doctest.css" />
+  <script type="text/javascript" src="../urlmatch.js"></script>
+</head>
+<body>
+<h2> urlmatch.js tests </h2>
+
+<p>
+</p>
+
+<div>
+  <button onclick="doctest()" type="button">run tests</button>
+  <pre id="doctestOutput"></pre>
+</div>
+
+Test round trip parsing and stringification
+
+<pre class="doctest">
+$ var normalize = function(s) { writeln(URL.parse(s).validate().normalize().toString()) };
+$ normalize("http://apps.mozillalabs.com");
+http://apps.mozillalabs.com:80/
+$ normalize("http://apps.mozillalabs.com/");
+http://apps.mozillalabs.com:80/
+$ normalize("https://apps.mozillalabs.com/");
+https://apps.mozillalabs.com:443/
+$ normalize("https://secu.re:443");
+https://secu.re:443/
+$ normalize("https://secu.re:444");
+https://secu.re:444/
+$ normalize("http://secu.re:443");
+http://secu.re:443/
+$ normalize("https://secu.re:443/foo/../bar/x.html");
+https://secu.re:443/bar/x.html
+$ normalize("http://f.oo/dir");
+http://f.oo:80/dir
+$ normalize("http://f.oo/dir/");
+http://f.oo:80/dir/
+$ normalize("http://:pass@host.com");
+http://:pass@host.com:80/
+</pre>
+</body>
+</html>
