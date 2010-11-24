@@ -7,14 +7,42 @@
  *  + parse a url into components
  *  + semantically lossless normalization
  *  +      "          "     humanization
- *  +
+ *  + 
  *
  * URL.parse(string) -
  *   parse a url using the 'parseUri' algorithm, returning an object containing various
  *   uri components. returns an object with the following properties (all optional):
- * 
- * 
+ *  
+ *   PROPERTIES:
+ *     anchor - stuff after the #
+ *     authority - everything after the :// and before the path.  Including user auth, host, and port
+ *     directory - path with trailing filename and everything after removed
+ *     file - path without directory
+ *     host - host
+ *     password - password part when user:pass@ is prepended to host
+ *     path - full path, sans query or anchor
+ *     port - port, when present in url
+ *     query - ?XXX
+ *     relative -
+ *     scheme - url scheme (http, file, https, etc.) 
+ *     source - full string passed to URL.parse() 
+ *     user - user part when user:pass@ is prepended to host
+ *     userInfo -
  *
+ *   FUNCTIONS:
+ *     (string) toString() - generate a string representation of the url
+ *    
+ *     (this) validate() - validate the url, possbly throwing a string exception
+ *        if determined to not be a valid URL.  Returns this, thus may be chained.
+ *
+ *     (this) humanize() - perform in-place modification of the url to make it more readable.
+ *        Returns this, thus may be chained.
+ * 
+ *     (this) normalize() - perform in-place modification of the url to place it in a normal
+ *        (and verbose) form. Returns this, thus may be chained.
+ *          
+ *     (bool) contains(str) - returns whether the object upon which contains() is called is a
+ *        "url prefix" for the passed in string, after normalization.
  */
 
 URL = (function() {
