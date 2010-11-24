@@ -108,6 +108,32 @@ $ parse("http://host.com:12.34/");
     "scheme": "http",
     "source": "http://host.com:12.34/"
 }
+$ parse("http://user:pass@host.com:81?query#anchor");
+{
+    "anchor": "anchor",
+    "query": "query",
+    "relative": "?query#anchor",
+    "port": "81",
+    "host": "host.com",
+    "password": "pass",
+    "user": "user",
+    "userInfo": "user:pass",
+    "authority": "user:pass@host.com:81",
+    "scheme": "http",
+    "source": "http://user:pass@host.com:81?query#anchor",
+    "queryKey": {
+        "query": ""
+    }
+}
+$ parse("http://:pass@host.com");
+{
+    "host": "host.com",
+    "password": "pass",
+    "userInfo": ":pass",
+    "authority": ":pass@host.com",
+    "scheme": "http",
+    "source": "http://:pass@host.com"
+}
 </pre>
 </body>
 </html>

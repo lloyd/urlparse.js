@@ -49,7 +49,16 @@ URL = (function() {
     /* const */ var INV_URL = "invalid url: ";
 	  var parseUrl = function(s) {
         var toString = function() {
-            return "astring";
+            var str = this.scheme + "://"; 
+            if (this.user) str += this.user;
+            if (this.password) str += ":" + this.password;
+            if (this.user || this.password) str += "@";
+            if (this.host) str += this.host;
+            if (this.port) str += ":" + this.port; 
+            if (this.path) str += this.path;
+            if (this.query) str += "?" + this.query;
+            if (this.anchor) str += "#" + this.anchor;
+            return str;
         };
         
         var validate = function() {
