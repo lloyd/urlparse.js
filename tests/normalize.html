@@ -20,26 +20,26 @@ Test round trip parsing and stringification
 
 <pre class="doctest">
 $ var normalize = function(s) { writeln(URL.parse(s).validate().normalize().toString()) };
-$ normalize("http://apps.mozillalabs.com");
-http://apps.mozillalabs.com:80/
-$ normalize("http://apps.mozillalabs.com/");
-http://apps.mozillalabs.com:80/
-$ normalize("https://apps.mozillalabs.com/");
-https://apps.mozillalabs.com:443/
+$ normalize("http://apps.mozillalabs.com:80");
+http://apps.mozillalabs.com/
+$ normalize("http://apps.mozillalabs.com:80/");
+http://apps.mozillalabs.com/
+$ normalize("https://apps.mozillalabs.com:443/");
+https://apps.mozillalabs.com/
 $ normalize("https://secu.re:443");
-https://secu.re:443/
+https://secu.re/
 $ normalize("https://secu.re:444");
 https://secu.re:444/
 $ normalize("http://secu.re:443");
 http://secu.re:443/
 $ normalize("https://secu.re:443/foo/../bar/x.html");
-https://secu.re:443/bar/x.html
-$ normalize("http://f.oo/dir");
-http://f.oo:80/dir
+https://secu.re/bar/x.html
+$ normalize("http://f.oo:80/dir");
+http://f.oo/dir
 $ normalize("http://f.oo/dir/");
-http://f.oo:80/dir/
-$ normalize("http://:pass@host.com");
-http://:pass@host.com:80/
+http://f.oo/dir/
+$ normalize("http://:pass@host.com:80");
+http://:pass@host.com/
 </pre>
 </body>
 </html>

@@ -5,9 +5,9 @@
  *
  * Features:
  *  + parse a url into components
+ *  + url validiation 
  *  + semantically lossless normalization
- *  +      "          "     humanization
- *  + 
+ *  + url prefix matching
  *
  * URL.parse(string) -
  *   parse a url using the 'parseUri' algorithm, returning an object containing various
@@ -35,9 +35,6 @@
  *     (this) validate() - validate the url, possbly throwing a string exception
  *        if determined to not be a valid URL.  Returns this, thus may be chained.
  *
- *     (this) humanize() - perform in-place modification of the url to make it more readable.
- *        Returns this, thus may be chained.
- * 
  *     (this) normalize() - perform in-place modification of the url to place it in a normal
  *        (and verbose) form. Returns this, thus may be chained.
  *          
@@ -83,11 +80,9 @@ URL = (function() {
             // for directory references, append trailing slash
             if (!this.path) this.path = "/";
 
-            // include port numbers for defaults
-            if (!this.port) {
-                if ('http' === this.scheme) this.port = '80';
-                else if ('https' === this.scheme) this.port = '443';
-            }
+            // remove port numbers same as default
+            if (this.port === "80" && 'http' === this.scheme) delete this.port;
+            if (this.port === "443" && 'https' === this.scheme) delete this.port;
 
             // remove dot segments from path, algorithm
             // http://tools.ietf.org/html/rfc3986#section-5.2.4
