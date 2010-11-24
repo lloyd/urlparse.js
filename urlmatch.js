@@ -28,7 +28,14 @@ URL = (function() {
             if (!this.scheme) throw INV_URL +"missing scheme";
             if (this.scheme !== 'http' && this.scheme !== 'https') 
                 throw INV_URL + "unsupported scheme: " + this.scheme;
-            console.log(this.scheme);
+            if (!this.host) throw INV_URL + "missing host";
+            if (this.port) {
+                var p = parseInt(this.port);
+                if (!this.port.match(/^\d+$/)) throw INV_URL + "non-numeric numbers in port";
+                if (p <= 0 || p >= 65536) throw INV_URL + "port out of range (" +this.port+")";
+            }
+            if (this.path && this.path.indexOf('/') != 0) throw INV_URL + "path must start with '/'";
+
             return;
         };
 

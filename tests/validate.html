@@ -3,7 +3,7 @@
 	<title> urlmatch tests </title>
   <script type="text/javascript" src="doctestjs/doctest.js"></script>
   <link rel="stylesheet" type="text/css" href="doctestjs/doctest.css" />
-  <script type="text/javascript" src="urlmatch.js"></script>
+  <script type="text/javascript" src="../urlmatch.js"></script>
 </head>
 <body>
 <h2> urlmatch.js tests </h2>
@@ -23,8 +23,20 @@ http://stevenlevithan.com/demo/parseuri/js/assets/demo.js.
 <pre class="doctest">
 $ var validate = function(s) { return URL.parse(s).validate(); };
 $ validate("http://apps.mozillalabs.com");
+$ validate("!@#%!$^!^$"); 
+Error: invalid url: missing scheme
+$ validate("://host.com"); 
+Error: invalid url: missing scheme
 $ validate("bogus://apps.mozillalabs.com");
 Error: invalid url: unsupported scheme: bogus
+$ validate("http:");
+Error: invalid url: missing host
+$ validate("http://host.com:76543");
+Error: invalid url: port out of range (76543)
+$ validate("http://host.com:0");
+Error: invalid url: port out of range (0)
+$ validate("http://host.com:12.34");
+Error: invalid url: path must start with '/'
 </pre>
 
 <script>

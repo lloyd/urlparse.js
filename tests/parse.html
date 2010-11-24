@@ -3,7 +3,7 @@
 	<title> urlmatch tests </title>
   <script type="text/javascript" src="doctestjs/doctest.js"></script>
   <link rel="stylesheet" type="text/css" href="doctestjs/doctest.css" />
-  <script type="text/javascript" src="urlmatch.js"></script>
+  <script type="text/javascript" src="../urlmatch.js"></script>
 </head>
 <body>
 <h2> urlmatch.js tests </h2>
@@ -86,6 +86,27 @@ $ parse("http://f.oo/dir/");
     "authority": "f.oo",
     "scheme": "http",
     "source": "http://f.oo/dir/"
+}
+$ parse("http://user@host.com:76543");
+{
+    "port": "76543",
+    "host": "host.com",
+    "user": "user",
+    "userInfo": "user",
+    "authority": "user@host.com:76543",
+    "scheme": "http",
+    "source": "http://user@host.com:76543"
+}
+$ parse("http://host.com:12.34/");
+{
+    "directory": ".34/",
+    "path": ".34/",
+    "relative": ".34/",
+    "port": "12",
+    "host": "host.com",
+    "authority": "host.com:12",
+    "scheme": "http",
+    "source": "http://host.com:12.34/"
 }
 </pre>
 </body>
