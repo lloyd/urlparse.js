@@ -1,16 +1,20 @@
 /**
  * urlmatch.js 
  *
- * Includes parseUri (c) Steven Levithan <stevenLevithan.com> Under the MIT License
+ * Includes parseUri (c) Steven Levithan <steven@levithan.com> Under the MIT License
+ *
+ * Features:
+ *  + parse a url into components
+ *  + semantically lossless normalization
+ *  +      "          "     humanization
+ *  +
  *
  * URL.parse(string) -
  *   parse a url using the 'parseUri' algorithm, returning an object containing various
- *   uri components.
+ *   uri components. returns an object with the following properties (all optional):
+ * 
+ * 
  *
- * URL. 
- *  + parse a url into components
- *  + canonicalize url
- *  + 
  */
 
 URL = (function() {

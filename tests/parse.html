@@ -88,14 +88,5 @@ $ parse("http://f.oo/dir/");
     "source": "http://f.oo/dir/"
 }
 </pre>
-
-Now test "url validation".
-
-<pre class="doctest">
-$ var validate = function(s) { return URL.parse(s).validate(); };
-$ validate("http://apps.mozillalabs.com");
-$ validate("bogus://apps.mozillalabs.com");
-Error: invalid url: unsupported scheme: bogus
-</pre>
 </body>
 </html>
