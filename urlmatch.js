@@ -124,6 +124,18 @@ URL = (function() {
             return this;
         };
 
+        var contains = function(str) {
+            try {
+                var prefix = this.validate().normalize().toString();
+                var url = URL.parse(str).validate().normalize().toString();
+                return (url.indexOf(prefix) === 0);
+            } catch(e) {
+                console.log(e);
+                // if any exceptions are raised, then the comparison fails
+                return false;
+            }
+        };
+
 		    // parseUri 1.2.2
 		    // (c) Steven Levithan <stevenlevithan.com>
 		    // MIT License
@@ -145,6 +157,7 @@ URL = (function() {
             uri.toString = toString;
             uri.validate = validate;
             uri.normalize = normalize;
+            uri.contains = contains;
 			      return uri;
 		    };
 
