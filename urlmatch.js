@@ -1,18 +1,18 @@
 /**
- * urlmatch.js 
+ * urlmatch.js
  *
  * Includes parseUri (c) Steven Levithan <steven@levithan.com> Under the MIT License
  *
  * Features:
  *  + parse a url into components
- *  + url validiation 
+ *  + url validiation
  *  + semantically lossless normalization
  *  + url prefix matching
  *
  * URL.parse(string) -
  *   parse a url using the 'parseUri' algorithm, returning an object containing various
  *   uri components. returns an object with the following properties (all optional):
- *  
+ *
  *   PROPERTIES:
  *     anchor - stuff after the #
  *     authority - everything after the :// and before the path.  Including user auth, host, and port
@@ -24,43 +24,43 @@
  *     port - port, when present in url
  *     query - ?XXX
  *     relative -
- *     scheme - url scheme (http, file, https, etc.) 
- *     source - full string passed to URL.parse() 
+ *     scheme - url scheme (http, file, https, etc.)
+ *     source - full string passed to URL.parse()
  *     user - user part when user:pass@ is prepended to host
  *     userInfo -
  *
  *   FUNCTIONS:
  *     (string) toString() - generate a string representation of the url
- *    
+ *
  *     (this) validate() - validate the url, possbly throwing a string exception
  *        if determined to not be a valid URL.  Returns this, thus may be chained.
  *
  *     (this) normalize() - perform in-place modification of the url to place it in a normal
  *        (and verbose) form. Returns this, thus may be chained.
- *          
+ *
  *     (bool) contains(str) - returns whether the object upon which contains() is called is a
  *        "url prefix" for the passed in string, after normalization.
  */
 
 URL = (function() {
     /* const */ var INV_URL = "invalid url: ";
-	  var parseUrl = function(s) {
+    var parseUrl = function(s) {
         var toString = function() {
-            var str = this.scheme + "://"; 
+            var str = this.scheme + "://";
             if (this.user) str += this.user;
             if (this.password) str += ":" + this.password;
             if (this.user || this.password) str += "@";
             if (this.host) str += this.host;
-            if (this.port) str += ":" + this.port; 
+            if (this.port) str += ":" + this.port;
             if (this.path) str += this.path;
             if (this.query) str += "?" + this.query;
             if (this.anchor) str += "#" + this.anchor;
             return str;
         };
-        
+
         var validate = function() {
             if (!this.scheme) throw INV_URL +"missing scheme";
-            if (this.scheme !== 'http' && this.scheme !== 'https') 
+            if (this.scheme !== 'http' && this.scheme !== 'https')
                 throw INV_URL + "unsupported scheme: " + this.scheme;
             if (!this.host) throw INV_URL + "missing host";
             if (this.port) {
@@ -112,10 +112,10 @@ URL = (function() {
 
             // now we need to update all members
             var n = URL.parse(this.toString()),
-    				    i = 14,
-                o = parseUri.options;
-            
-		        while (i--) {
+            i = 14,
+            o = parseUri.options;
+
+            while (i--) {
                 var k = o.key[i];
                 if (n[k] && typeof(n[k]) === 'string') this[k] = n[k];
                 else if (this[k] && typeof(this[k]) === 'string') delete this[k];
@@ -136,46 +136,46 @@ URL = (function() {
             }
         };
 
-		    // parseUri 1.2.2
-		    // (c) Steven Levithan <stevenlevithan.com>
-		    // MIT License
-		    var parseUri = function(str) {
-			      var	o   = parseUri.options,
-				    m   = o.parser.exec(str),
-				    uri = {},
-				    i   = 14;
+        // parseUri 1.2.2
+        // (c) Steven Levithan <stevenlevithan.com>
+        // MIT License
+        var parseUri = function(str) {
+            var o   = parseUri.options,
+            m   = o.parser.exec(str),
+            uri = {},
+            i   = 14;
 
-		        while (i--) if (m[i]) uri[o.key[i]] = m[i];
+            while (i--) if (m[i]) uri[o.key[i]] = m[i];
 
             if (uri[o.key[12]]) {
-    			      uri[o.q.name] = {};
-			          uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
-				            if ($1) uri[o.q.name][$1] = $2;
-			          });
+                uri[o.q.name] = {};
+                uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
+                    if ($1) uri[o.q.name][$1] = $2;
+                });
             }
             // member functions
             uri.toString = toString;
             uri.validate = validate;
             uri.normalize = normalize;
             uri.contains = contains;
-			      return uri;
-		    };
+            return uri;
+        };
 
-		    parseUri.options = {
-			      key: ["source","scheme","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
-			      q:   {
-				        name:   "queryKey",
-				        parser: /(?:^|&)([^&=]*)=?([^&]*)/g
-			      },
-			      parser: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/
-		    };
-		    // end parseUri
-		    
-		    // parse URI using the parseUri code and return the resultant object
-		    return parseUri(s);
-	  };
-	  
-	  return {
-		    parse: parseUrl
-	  };
+        parseUri.options = {
+            key: ["source","scheme","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
+            q:   {
+                name:   "queryKey",
+                parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+            },
+            parser: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/
+        };
+        // end parseUri
+
+        // parse URI using the parseUri code and return the resultant object
+        return parseUri(s);
+    };
+
+    return {
+        parse: parseUrl
+    };
 })();
