@@ -19,7 +19,7 @@
 Test round trip parsing and stringification
 
 <pre class="doctest">
-$ var normalize = function(s) { writeln(URL.parse(s).validate().normalize().toString()) };
+$ var normalize = function(s) { writeln(URLParse(s).validate().normalize().toString()) };
 $ normalize("http://apps.mozillalabs.com:80");
 http://apps.mozillalabs.com/
 $ normalize("http://apps.mozillalabs.com:80/");

@@ -15,7 +15,7 @@
 The first feature of urlmatch is its ability to parse a url into components:
 
 <pre class="doctest">
-$ print(URL.parse("http://google.com/"));
+$ print(URLParse("http://google.com/"));
 {
     "directory": "/",
     "path": "/",
@@ -30,21 +30,21 @@ $ print(URL.parse("http://google.com/"));
 urlmatch can also validate urls:
 
 <pre class="doctest">
-$ URL.parse("httpe://www.google.com/").validate();
+$ URLParse("httpe://www.google.com/").validate();
 Error: invalid url: unsupported scheme: httpe
 </pre>
 
 can also normalize urls:
 
 <pre class="doctest">
-$ URL.parse("http://www.google.com:80/foo/../bar/").normalize();
+$ URLParse("http://www.google.com:80/foo/../bar/").normalize();
 http://www.google.com/bar/
 </pre>
 
 And finally, urlmatch can combine all of these features to support
 robust url prefix matching:
 <pre class="doctest">
-$ var contains = function(url1, url2) { writeln(URL.parse(url1).contains(url2)); };
+$ var contains = function(url1, url2) { writeln(URLParse(url1).contains(url2)); };
 $ contains("http://doma.in/appscope/", "http://doma.in/appscope/somepath/../../attack.html");
 false
 $ contains("http://doma.in/appscope/", "http://doma.in/appscope/somepath/../not_attack.html");

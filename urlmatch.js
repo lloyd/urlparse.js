@@ -9,7 +9,7 @@
  *  + semantically lossless normalization
  *  + url prefix matching
  *
- * URL.parse(string) -
+ * window.URLParse(string) -
  *   parse a url using the 'parseUri' algorithm, returning an object containing various
  *   uri components. returns an object with the following properties (all optional):
  *
@@ -25,7 +25,7 @@
  *     query - ?XXX
  *     relative -
  *     scheme - url scheme (http, file, https, etc.)
- *     source - full string passed to URL.parse()
+ *     source - full string passed to URLParse()
  *     user - user part when user:pass@ is prepended to host
  *     userInfo -
  *
@@ -42,9 +42,9 @@
  *        "url prefix" for the passed in string, after normalization.
  */
 
-URL = (function() {
+URLParse = (function() {
     /* const */ var INV_URL = "invalid url: ";
-    var parseUrl = function(s) {
+    var parseURL = function(s) {
         var toString = function() {
             var str = this.scheme + "://";
             if (this.user) str += this.user;
@@ -111,7 +111,7 @@ URL = (function() {
             // XXX: upcase chars in % escaping?
 
             // now we need to update all members
-            var n = URL.parse(this.toString()),
+            var n = parseURL(this.toString()),
             i = 14,
             o = parseUri.options;
 
@@ -127,7 +127,7 @@ URL = (function() {
         var contains = function(str) {
             try {
                 var prefix = this.validate().normalize().toString();
-                var url = URL.parse(str).validate().normalize().toString();
+                var url = parseURL(str).validate().normalize().toString();
                 return (url.indexOf(prefix) === 0);
             } catch(e) {
                 console.log(e);
@@ -175,7 +175,5 @@ URL = (function() {
         return parseUri(s);
     };
 
-    return {
-        parse: parseUrl
-    };
+    return parseURL;
 })();

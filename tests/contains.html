@@ -19,7 +19,7 @@
 Testing url prefix matching
 
 <pre class="doctest">
-$ var contains = function(url1, url2) { writeln(URL.parse(url1).contains(url2)); };
+$ var contains = function(url1, url2) { writeln(URLParse(url1).contains(url2)); };
 $ contains("http://apps.mozillalabs.com:80/app", "http://apps.mozillalabs.com/app/somedoc.html");
 true
 $ contains("http://doma.in/appscope/", "http://doma.in/appscope");
