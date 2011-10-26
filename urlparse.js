@@ -46,7 +46,7 @@
  *
  */
 
-URLParse = (function() {
+(function() {
     /* const */ var INV_URL = "invalid url: ";
     var parseURL = function(s) {
         var toString = function() {
@@ -186,5 +186,6 @@ URLParse = (function() {
         return parseUri(s);
     };
 
-    return parseURL;
+  if (typeof exports === 'undefined') window.URLParse = parseURL;
+  else module.exports = parseURL;
 })();
