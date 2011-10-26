@@ -1,0 +1,20 @@
+{
+  "author": "Lloyd Hilaiel <lloyd@hilaiel.com> (http://lloyd.io)",
+  "name": "urlparse",
+  "description": "URL parsing, validation, normalization, and matching",
+  "version": "0.0.1",
+  "homepage": "https://github.com/lloyd/urlparse.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lloyd/urlparse.js.git"
+  },
+  "main": "urlparse.js",
+  "engines": {
+    "node": ">=0.4.7"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm install nodeunit && nodeunit test.js"
+  }
+}
