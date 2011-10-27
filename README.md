@@ -24,6 +24,11 @@ can also normalize urls:
     $ URLParse("http://www.google.com:80/foo/../bar/").normalize();
     http://www.google.com/bar/
 
+can reliably extract the origin of a url:
+
+    $ URLParse("http://www.google.com:80/foo/../bar/").normalize().originOnly().toString();
+    http://www.google.com
+
 And finally, urlmatch can combine all of these features to support
 robust url prefix matching:
 
