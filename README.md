@@ -31,3 +31,25 @@ robust url prefix matching:
     false
     $ URLParse("http://doma.in/appscope/").contains("http://doma.in/appscope/somepath/../not_attack.html");
     true
+
+## In Browser Usage
+
+    <script src="urlparse.js"></script>
+    <script>
+      console.log(window.URLParse("https://github.com/lloyd/urlparse.js"));
+    <script>
+
+## NodeJS Usage
+
+Install it:
+
+    $ npm install urlparse
+
+Use it:
+
+    #!/usr/bin/env node
+
+    const urlparse = require('urlparse');
+
+    console.log(urlparse("https://github.com/lloyd/urlparse.js"));
+
