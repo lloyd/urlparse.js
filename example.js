@@ -1,5 +1,3 @@
-#!/usr/bin/node
-
 var urlparse = require('./urlparse.js');
 
 var burl = urlparse("https://browserid.org:443/some/path/to/a/../doc.html");
